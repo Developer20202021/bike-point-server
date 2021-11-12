@@ -266,9 +266,11 @@ AddProductRouter.put("/cancel-order", async (req, res)=>{
 
 // Track your Order 
 
-AddProductRouter.get("/tract-order", async (req, res)=>{
+AddProductRouter.get("/tract-order/:id", async (req, res)=>{
 
-    const {id} = req.query;
+    const {id} = req.params;
+    console.log(id);
+
     const getOrderStatus = await PlaceOrderModel.find({_id:id});
     if (getOrderStatus.length>0) {
         res.status(200).json(getOrderStatus);
@@ -326,6 +328,25 @@ AddProductRouter.post("/new-user",addNewUserIndexMiddle, async (req, res)=>{
 
 
 })
+
+AddProductRouter.get("/users", async (req, res)=>{
+    const {email} = req.query;
+
+
+    const User = await AddUserModel.find({email:email});
+    if (User.length>0) {
+        res.status(200).json(User);
+        console.log(User);
+    }
+    else{
+        res.status(500).json({msg:"Server Error!!"});
+        console.log(cancelOrder); 
+    }
+    
+
+})
+
+
 
 
 

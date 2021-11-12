@@ -17,12 +17,8 @@ const AddUserSchema = new mongoose.Schema({
         type:String,
         default:"user"
     },
-    image:{
-        type:String
-    },
-    phoneNumber:{
-        type:String
-    },
+    
+   
     date:{
         type:Date,
         default:Date.now

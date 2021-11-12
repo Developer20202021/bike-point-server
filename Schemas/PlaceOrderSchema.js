@@ -5,6 +5,9 @@ const PlaceOrderSchema = new mongoose.Schema({
     id:{
         type:Number,
     },
+    month:{
+        type:String
+    },
 
     address:{
         type:String,
