@@ -10,6 +10,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
+const port = process.env.PORT||5000;
+
 
 
 const url = `mongodb://${process.env.Database_UserName}:${process.env.Database_Password}@cluster0-shard-00-00.mgll3.mongodb.net:27017,cluster0-shard-00-01.mgll3.mongodb.net:27017,cluster0-shard-00-02.mgll3.mongodb.net:27017/bikePointDatabase?ssl=true&replicaSet=atlas-6onnuf-shard-0&authSource=admin&retryWrites=true&w=majority`;
@@ -36,6 +38,6 @@ app.use('/admin', AdminAllRouter);
 
 
 
-app.listen(5000, ()=>{
+app.listen(port, ()=>{
     console.log("Server running at 5000");
 })
