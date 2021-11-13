@@ -207,7 +207,7 @@ AdminAllRouter.get('/product/:id', async (req, res)=>{
 const adminCheckMiddle = async (req, res, next)=>{
 
     const {oldAdminEmail} = req.query;
-    console.log(oldAdminEmail);
+  
     const getAdmin = await AddUserModel.find({email:oldAdminEmail},{role:'admin'});
     if (getAdmin.length>0) {
         next()
@@ -224,7 +224,7 @@ const adminCheckMiddle = async (req, res, next)=>{
 AdminAllRouter.put('/add-new-admin',adminCheckMiddle, async (req, res)=>{
 
     const {newAdminEmail} = req.query;
-    console.log(newAdminEmail);
+   
 
     const addNewAdmin = await AddUserModel.findOneAndUpdate({email:newAdminEmail}, {$set:{role:"admin"}});
     if (addNewAdmin) {
