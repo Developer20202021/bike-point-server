@@ -10,17 +10,17 @@ const AddProductRouter = express.Router();
 
 
 
-const addProductIndex = async (req, res, next)=>{
-    const findProduct = await ProductModal.find({});
+// const addProductIndex = async (req, res, next)=>{
+//     const findProduct = await ProductModal.find({});
    
 
-    const productIndex = findProduct.length + 1;
-    req.body.id = productIndex;
-    next();
-}
+//     const productIndex = findProduct.length + 1;
+//     req.body.id = productIndex;
+//     next();
+// }
 
 
-AddProductRouter.post('/product',addProductIndex, async (req,res)=>{
+AddProductRouter.post('/product', async (req,res)=>{
     console.log(req.body);
     const addProduct = await ProductModal(req.body);
     addProduct.save(err=>{
@@ -127,17 +127,17 @@ AddProductRouter.get('/product/:id', async (req, res)=>{
 
 })
 
-const placeOrderMiddle = async(req, res, next)=>{
-    const getOrders = await PlaceOrderModel.find({});
-    const index = getOrders.length;
-    req.body.id = index+1;
-    console.log(req.body);
-    next()
-}
+// const placeOrderMiddle = async(req, res, next)=>{
+//     const getOrders = await PlaceOrderModel.find({});
+//     const index = getOrders.length;
+//     req.body.id = index+1;
+//     console.log(req.body);
+//     next()
+// }
 
 
 
-AddProductRouter.post('/placeorder',placeOrderMiddle,async (req, res)=>{
+AddProductRouter.post('/placeorder',async (req, res)=>{
 
     console.log(req.body);
 
@@ -294,28 +294,28 @@ AddProductRouter.get("/tract-order/:id", async (req, res)=>{
 
 // @NextDay
 
-const addNewUserIndexMiddle = async (req, res, next)=>{
+// const addNewUserIndexMiddle = async (req, res, next)=>{
 
-    const getAllUserIndex = await AddUserModel.find({});
-    const newUserIndex =  getAllUserIndex.length;
-     req.body.id = newUserIndex + 1;
-     console.log(req.body);
-     next()
+//     const getAllUserIndex = await AddUserModel.find({});
+//     const newUserIndex =  getAllUserIndex.length;
+//      req.body.id = newUserIndex + 1;
+//      console.log(req.body);
+//      next()
  
         
     
 
 
-}
+// }
 
-AddProductRouter.post("/new-user",addNewUserIndexMiddle, async (req, res)=>{
+AddProductRouter.post("/new-user", async (req, res)=>{
 
 
     const addUser = await AddUserModel(req.body);
         addUser.save(err=>{
             if (err) {
                 res.status(500).json({msg:"Server Error!!"});
-                console.log(cancelOrder); 
+           
             }
             else{
                 res.status(200).json(addUser);
@@ -340,9 +340,58 @@ AddProductRouter.get("/users", async (req, res)=>{
     }
     else{
         res.status(500).json({msg:"Server Error!!"});
-        console.log(cancelOrder); 
+       
     }
     
+
+})
+
+
+
+// check he or she user or not 
+
+const userCheckMiddle = async (req, res, next)=>{
+
+    const {email}= req.body;
+
+    const CheckUser = await AddUserModel.find({email:email});
+
+    if (CheckUser.length>0) {
+
+        res.status(200).json({msg:"user already taken"})
+        console.log(CheckUser);
+        
+
+
+    }
+    else{
+        next();
+    }
+
+
+
+
+}
+
+
+
+AddProductRouter.post("/add-google-new-user",userCheckMiddle, async (req,res)=>{
+
+
+    console.log(req.body);
+
+    const addUser = await AddUserModel(req.body);
+        addUser.save(err=>{
+            if (err) {
+                res.status(500).json({msg:"Server Error!!"});
+               
+            }
+            else{
+                res.status(200).json(addUser);
+                    console.log(addUser);
+            }
+        })
+
 
 })
 

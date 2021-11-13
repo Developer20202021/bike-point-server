@@ -227,7 +227,7 @@ AdminAllRouter.put('/add-new-admin',adminCheckMiddle, async (req, res)=>{
     console.log(newAdminEmail);
 
     const addNewAdmin = await AddUserModel.findOneAndUpdate({email:newAdminEmail}, {$set:{role:"admin"}});
-    if (addNewAdmin.length>0) {
+    if (addNewAdmin) {
         res.status(200).json(addNewAdmin);
         console.log(addNewAdmin);
     }
