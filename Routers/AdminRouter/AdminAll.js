@@ -280,11 +280,16 @@ else{
 
 
 
-AdminAllRouter.delete('/admin-delete/:id',async (req,res)=>{
+
+// update 
+
+AdminAllRouter.put('/admin-delete/:id',async (req,res)=>{
 
     const {id}= req.params;
+    console.log(id);
 
-    const deleteAdmin = await AddUserModel.deleteOne({_id:id});
+    const deleteAdmin = await AddUserModel.findOneAndUpdate({_id:id}, {$set:{role:"user"}});
+    console.log(deleteAdmin);
     if (deleteAdmin) {
         res.status(200).json(deleteAdmin);
     }
